@@ -1,10 +1,11 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx, css}',
   ],
   theme: {
     extend: {
@@ -69,6 +70,16 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.transition-focus:focus': {
+          outline: 'none',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          transition: 'all 0.15s ease-in-out',
+        },
+      })
+    }),
+  ],
 }
 export default config

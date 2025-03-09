@@ -10,6 +10,5 @@ module.exports = {
         printWidth: 100,
       },
     ],
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
 }

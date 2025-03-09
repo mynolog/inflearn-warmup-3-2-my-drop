@@ -31,7 +31,7 @@ export default function RootLayout({
             referrerPolicy="no-referrer"
           />
         </head>
-        <body className={`${notoSansKR.className} antialiased`}>{children}</body>
+        <body className={`${notoSansKR.className} antialiased w-full h-screen`}>{children}</body>
       </html>
     </ReactQueryClientProvider>
   )
