@@ -1,3 +1,9 @@
+import Header from '@/components/layout/header/Header'
+
 export default function Home() {
-  return <div className=" text-6xl text-mint-400">MyDrop</div>
+  return (
+    <div className="w-full p-2">
+      <Header />
+    </div>
+  )
 }
