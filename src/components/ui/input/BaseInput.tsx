@@ -1,9 +1,11 @@
+'use client'
+
 import { IBM_Plex_Sans_KR } from 'next/font/google'
 
 export interface BaseInputProps {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  type?: 'text' | 'email' | 'password'
+  type?: 'text' | 'file'
   placeholder?: string
   className?: string
 }

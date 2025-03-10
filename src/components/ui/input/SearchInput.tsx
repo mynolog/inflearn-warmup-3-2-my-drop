@@ -1,3 +1,5 @@
+'use client'
+
 import type { BaseInputProps } from './BaseInput'
 import BaseInput from './BaseInput'
 
