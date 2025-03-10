@@ -9,7 +9,7 @@ interface DropImageList {
 
 export default function DropImageList({ imageList }: DropImageList) {
   return (
-    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 h-52">
       {imageList.map((image) => (
         <DropImageManager key={image.id} image={image} />
       ))}

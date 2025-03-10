@@ -3,6 +3,7 @@
 import { createServerSupabaseClient } from '@/utils/supabase/server'
 import { STORAGE_BUCKET_NAME } from '@/constants/supabaseConstants'
 
+//TODO: 에러 핸들링 고도화
 function handleError(error: unknown) {
   if (error) {
     console.error(error)
@@ -23,12 +24,10 @@ export async function uploadImage(formData: FormData) {
   return data
 }
 
-export async function searchImages(search: string = '') {
+export async function searchImages() {
   const supabase = await createServerSupabaseClient()
 
-  const { data, error } = await supabase.storage.from(STORAGE_BUCKET_NAME).list(undefined, {
-    search,
-  })
+  const { data, error } = await supabase.storage.from(STORAGE_BUCKET_NAME).list()
 
   handleError(error)
 
