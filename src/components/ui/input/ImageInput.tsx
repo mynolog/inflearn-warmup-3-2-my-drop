@@ -1,12 +1,25 @@
-'use client'
+import { forwardRef } from 'react'
 
-import type { BaseInputProps } from './BaseInput'
-import BaseInput from './BaseInput'
-
-//TODO: ImageInputProps 확장
-interface ImageInputProps extends Omit<BaseInputProps, 'type'> {}
-
-export default function FileInput({}: ImageInputProps) {
-  //TODO: Props 전달
-  return <BaseInput type="file" />
+interface ImageInputProps {
+  name?: string
+  placeholder?: string
+  className?: string
 }
+
+const ImageInput = forwardRef<HTMLInputElement, ImageInputProps>(
+  ({ placeholder, name, className }, ref) => {
+    return (
+      <input
+        ref={ref}
+        type="file"
+        name={name}
+        placeholder={placeholder}
+        className={`${className}`}
+      />
+    )
+  },
+)
+
+ImageInput.displayName = 'ImageInput'
+
+export default ImageInput

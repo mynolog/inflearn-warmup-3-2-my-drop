@@ -1,7 +1,16 @@
 'use client'
 
-import DropImageList from '@/components/ui/drop-image-list/DropImageList'
+import type { StorageFile } from '@/types/supabaseTypes'
+import DropImage from '@/components/ui/drop-image/DropImage'
 
-export default function DropImageManager() {
-  return <DropImageList />
+interface DropImageManager {
+  image: StorageFile
+}
+
+export default function DropImageManager({ image }: DropImageManager) {
+  return (
+    <li>
+      <DropImage image={image} />
+    </li>
+  )
 }

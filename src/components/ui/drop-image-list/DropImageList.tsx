@@ -1,14 +1,18 @@
 'use client'
 
-import DropImage from '../drop-image/DropImage'
+import DropImageManager from '@/components/manager/drop-image/DropImageManager'
+import { StorageFile } from '@/types/supabaseTypes'
 
-export default function DropImageList() {
+interface DropImageList {
+  imageList: StorageFile[]
+}
+
+export default function DropImageList({ imageList }: DropImageList) {
   return (
-    <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-      <DropImage />
-      <DropImage />
-      <DropImage />
-      <DropImage />
-    </section>
+    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      {imageList.map((image) => (
+        <DropImageManager key={image.id} image={image} />
+      ))}
+    </ul>
   )
 }
