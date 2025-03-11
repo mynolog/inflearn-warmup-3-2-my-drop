@@ -10,5 +10,12 @@ module.exports = {
         printWidth: 100,
       },
     ],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
 }

@@ -13,15 +13,32 @@ function handleError(error: unknown) {
 
 export async function uploadImage(formData: FormData) {
   const supabase = await createServerSupabaseClient()
-  const file = formData.get('file') as File
 
-  const { data, error } = await supabase.storage
-    .from(STORAGE_BUCKET_NAME)
-    .upload(file.name, file, { upsert: true })
+  const files = Array.from(formData.entries()).map(([_, file]) => file as File)
+  const failedFileNames: string[] = []
 
-  handleError(error)
+  try {
+    const results = await Promise.all(
+      files.map(async (file) => {
+        const { error } = await supabase.storage
+          .from(STORAGE_BUCKET_NAME)
+          .upload(file.name, file, { upsert: true })
 
-  return data
+        if (error) {
+          failedFileNames.push(file.name)
+        }
+
+        return { success: true, fileNames: file.name }
+      }),
+    )
+
+    return results
+  } catch (error) {
+    console.error('파일 업로드 중 오류 발생:', error)
+    throw new Error(
+      `다음 파일은 파일명에 한글 또는 특수 문자가 포함되어 업로드할 수 없습니다: ${failedFileNames.join(', ')}`,
+    )
+  }
 }
 
 export async function getImages() {

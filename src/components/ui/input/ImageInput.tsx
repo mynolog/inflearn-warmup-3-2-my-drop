@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+'use client'
 
 interface ImageInputProps {
   name?: string
@@ -6,20 +6,6 @@ interface ImageInputProps {
   className?: string
 }
 
-const ImageInput = forwardRef<HTMLInputElement, ImageInputProps>(
-  ({ placeholder, name, className }, ref) => {
-    return (
-      <input
-        ref={ref}
-        type="file"
-        name={name}
-        placeholder={placeholder}
-        className={`${className}`}
-      />
-    )
-  },
-)
-
-ImageInput.displayName = 'ImageInput'
-
-export default ImageInput
+export default function ImageInput({ placeholder, name, className }: ImageInputProps) {
+  return <input name={name} placeholder={placeholder} className={`${className}`} />
+}
