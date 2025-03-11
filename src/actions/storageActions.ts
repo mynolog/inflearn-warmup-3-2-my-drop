@@ -26,9 +26,10 @@ export async function uploadImage(formData: FormData) {
 
         if (error) {
           failedFileNames.push(file.name)
+          throw new Error('파일 업로드 중 오류 발생')
         }
 
-        return { success: true, fileNames: file.name }
+        return { success: true, fileNames: failedFileNames }
       }),
     )
 

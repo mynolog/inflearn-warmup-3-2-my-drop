@@ -6,12 +6,14 @@ import { useMutation } from '@tanstack/react-query'
 import { deleteImage } from '@/actions/storageActions'
 import { queryClient } from '@/providers/ReactQueryClientProvider'
 import { QUERY_KEY } from '@/constants/reactQueryConstants'
+import { getLocalTime } from '@/utils/format/format'
 
 interface DropImageManager {
   image: StorageFile
 }
 
 export default function DropImageManager({ image }: DropImageManager) {
+  const LocalupdatedAt = getLocalTime(image.updated_at)
   const deleteImageMutation = useMutation({
     mutationFn: deleteImage,
     onSuccess: () => {
@@ -31,6 +33,7 @@ export default function DropImageManager({ image }: DropImageManager) {
         image={image}
         onDelete={handleDeleteImage}
         isPending={deleteImageMutation.isPending}
+        localUpdatedAt={LocalupdatedAt}
       />
     </li>
   )

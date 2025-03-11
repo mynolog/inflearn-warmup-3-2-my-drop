@@ -50,7 +50,17 @@ export default function ImagePickerManager() {
     [uploadImageMutation, setFileErrorState, resetFileError],
   )
 
-  const dropzoneState = useDropzone({ onDrop, multiple: true })
+  const dropzoneState = useDropzone({
+    onDrop,
+    multiple: true,
+    accept: {
+      'image/jpeg': ['.jpg', '.jpeg'],
+      'image/png': ['.png'],
+      'image/gif': ['.gif'],
+      'image/heif': ['.heif'],
+      'image/heic': ['.heic'],
+    },
+  })
 
   return (
     <ImagePicker

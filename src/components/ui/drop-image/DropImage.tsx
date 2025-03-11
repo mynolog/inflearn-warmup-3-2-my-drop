@@ -10,19 +10,29 @@ interface DropImageProps {
   image: StorageFile
   onDelete: (fileName: string) => void
   isPending: boolean
+  localUpdatedAt: string
 }
 
-export default function DropImage({ image, onDelete, isPending }: DropImageProps) {
+export default function DropImage({ image, onDelete, isPending, localUpdatedAt }: DropImageProps) {
   const handleDeleteClick = () => {
     onDelete(image.name)
   }
 
   return (
     <div className="group w-full flex flex-col gap-2 border border-gray-100 bg-white hover:bg-gray-100 rounded-2xl shadow-md overflow-hidden transition-hover animate-fadeIn">
-      <div className="w-full flex items-center justify-between px-2 pt-2 z-50 gap-2 overflow-hidden">
+      <div className="flex items-center justify-between px-2 pt-2 z-50 gap-2 overflow-hidden">
         <i className="fas fa-image text-soft-blue-800 text-xs"></i>
-        <span className="w-5/6 truncate text-xs font-semibold">{image.name}</span>
-        <BaseButton bgColor="bg-red-500" className="w-7 h-6 rounded-lg" onClick={handleDeleteClick}>
+        <div className="w-5/6 flex flex-col flex-grow min-w-0">
+          <span className="w-5/6 truncate text-xs font-semibold">{image.name}</span>
+          <span className="w-5/6 truncate text-xs font-semibold text-soft-blue-800">
+            {localUpdatedAt}
+          </span>
+        </div>
+        <BaseButton
+          bgColor="bg-red-500"
+          className="w-7 h-6 rounded-lg flex-shrink-0"
+          onClick={handleDeleteClick}
+        >
           {isPending ? <Spinner /> : <i className="fas fa-trash text-xs"></i>}
         </BaseButton>
       </div>
