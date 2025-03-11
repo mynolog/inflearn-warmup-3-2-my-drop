@@ -78,6 +78,10 @@ const config: Config = {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           transition: 'all 0.15s ease-in-out',
         },
+        '.transition-hover:hover': {
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          transition: 'all 0.15s linear',
+        },
       })
     }),
   ],

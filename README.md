@@ -52,4 +52,16 @@ pnpm run dev
 
 ### ✨ 기능 설명
 
+### 🎯 적용한 패턴
+
+- 역할 분리 패턴: UI와 데이터 핸들링을 분리하여 재사용성과 유지보수성을 향상
+- 메모이제이션 필터링: useMemo를 활용해 검색 필터 최적화
+- 검색 결과 예외 처리: 검색 결과가 없을 경우 UI에서 명확한 피드백 제공
+
 ### ⚡ 트러블 슈팅
+
+1. React Query + Suspense 적용 실패
+
+- 문제: React Query 5버전에서 suspense: true 설정을 했지만 Suspense가 정상 동작하지 않음
+- 원인: React Query 5버전에서 Suspense 관련 옵션들이 비활성화되어 있어 Suspense가 동작하지 않음
+- 해결 방향: 최신 버전에서는 Suspense를 사용할 수 없으므로, 대체로 isLoading 등을 활용한 로딩 처리 방법을 사용

@@ -1,48 +1,28 @@
 'use client'
 
-import { useMemo } from 'react'
 import DropImageList from '@/components/ui/drop-image-list/DropImageList'
 import { useSearchStore } from '@/stores/useSearchStore'
 import { useQuery } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/constants/reactQueryConstants'
-import { searchImages } from '@/actions/storageActions'
-import Skeleton from '@/components/ui/skeleton/Skeleton'
+import { getImages } from '@/actions/storageActions'
 import useDebounce from '@/hooks/useDebounce'
+import { StorageFile } from '@/types/supabaseTypes'
 
 export default function DropImageListManager() {
   const { searchQuery } = useSearchStore()
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
-  const { data: imageList, isLoading } = useQuery({
+  const imagesQuery = useQuery<StorageFile[] | null>({
     queryKey: [QUERY_KEY.IMAGES],
-    queryFn: () => searchImages(),
+    queryFn: () => getImages(),
   })
 
-  const filteredImageList = useMemo(
-    () =>
-      imageList?.filter((image) =>
-        image.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()),
-      ) ?? [],
-    [imageList, debouncedSearchQuery],
-  )
+  const filteredImageList = (imagesQuery.data ?? [])
+    .filter((image) => image.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+    .sort((a, b) => {
+      // 최신순으로 정렬
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    })
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-4 gap-4 h-52">
-        {[...Array(4)].map((_, index) => (
-          <div className="flex items-center justify-center" key={index}>
-            <Skeleton width="100%" height="100%" className="rounded-xl" />
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  if (filteredImageList.length === 0) {
-    return (
-      <p className="text-center text-gray-500 font-bold text-2xl mt-4">😢 검색 결과가 없습니다. </p>
-    )
-  }
-
-  return <DropImageList imageList={filteredImageList} />
+  return <DropImageList filteredImageList={filteredImageList} imagesQuery={imagesQuery} />
 }

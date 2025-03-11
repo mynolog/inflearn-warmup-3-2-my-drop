@@ -33,5 +33,11 @@ export default function ImagePickerManager() {
     }
   }
 
-  return <ImagePicker onSubmit={handleImageUpload} ref={imageInputRef} />
+  return (
+    <ImagePicker
+      onSubmit={handleImageUpload}
+      ref={imageInputRef}
+      isLoading={uploadImageMutation.isPending}
+    />
+  )
 }

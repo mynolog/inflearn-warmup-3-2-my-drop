@@ -24,7 +24,7 @@ export async function uploadImage(formData: FormData) {
   return data
 }
 
-export async function searchImages() {
+export async function getImages() {
   const supabase = await createServerSupabaseClient()
 
   const { data, error } = await supabase.storage.from(STORAGE_BUCKET_NAME).list()
