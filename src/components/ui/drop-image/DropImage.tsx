@@ -4,19 +4,26 @@ import Image from 'next/image'
 import type { StorageFile } from '@/types/supabaseTypes'
 import BaseButton from '../button/BaseButton'
 import { getPublicImageUrl } from '@/utils/supabase/storage'
+import Spinner from '../spinner/Spinner'
 
 interface DropImageProps {
   image: StorageFile
+  onDelete: (fileName: string) => void
+  isPending: boolean
 }
 
-export default function DropImage({ image }: DropImageProps) {
+export default function DropImage({ image, onDelete, isPending }: DropImageProps) {
+  const handleDeleteClick = () => {
+    onDelete(image.name)
+  }
+
   return (
     <div className="group w-full flex flex-col gap-2 border border-gray-100 bg-white hover:bg-gray-100 rounded-2xl shadow-md overflow-hidden transition-hover animate-fadeIn">
       <div className="w-full flex items-center justify-between px-2 pt-2 z-50 gap-2 overflow-hidden">
         <i className="fas fa-image text-soft-blue-800 text-xs"></i>
         <span className="w-5/6 truncate text-xs font-semibold">{image.name}</span>
-        <BaseButton bgColor="bg-red-500" className="w-7 h-6 rounded-lg">
-          <i className="fas fa-trash text-xs"></i>
+        <BaseButton bgColor="bg-red-500" className="w-7 h-6 rounded-lg" onClick={handleDeleteClick}>
+          {isPending ? <Spinner /> : <i className="fas fa-trash text-xs"></i>}
         </BaseButton>
       </div>
 

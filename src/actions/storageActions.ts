@@ -33,3 +33,13 @@ export async function getImages() {
 
   return data
 }
+
+export async function deleteImage(fileName: string) {
+  const supabase = await createServerSupabaseClient()
+
+  const { data, error } = await supabase.storage.from(STORAGE_BUCKET_NAME).remove([fileName])
+
+  handleError(error)
+
+  return data
+}
