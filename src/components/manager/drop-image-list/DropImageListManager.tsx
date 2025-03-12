@@ -18,9 +18,11 @@ export default function DropImageListManager() {
   })
 
   const filteredImageList = (imagesQuery.data ?? [])
-    .filter((image) => image.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+    .filter((image) =>
+      // 한글을 완성형(NFC)으로 유니코드 정규화
+      image.originalName.normalize('NFC').includes(debouncedSearchQuery.normalize('NFC')),
+    )
     .sort((a, b) => {
-      // 최신순으로 정렬
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
 
