@@ -1,21 +1,20 @@
 'use client'
 
+import type { MydropRow } from '@/actions/storageActions'
 import Image from 'next/image'
-import type { StorageFile } from '@/types/supabaseTypes'
 import BaseButton from '../button/BaseButton'
-import { getPublicImageUrl } from '@/utils/supabase/storage'
 import Spinner from '../spinner/Spinner'
 
 interface DropImageProps {
-  image: StorageFile
-  onDelete: (fileName: string) => void
+  image: MydropRow
+  onDelete: ({ imageId, fileName }: { imageId: MydropRow['imageId']; fileName: string }) => void
   isPending: boolean
   localUpdatedAt: string
 }
 
 export default function DropImage({ image, onDelete, isPending, localUpdatedAt }: DropImageProps) {
   const handleDeleteClick = () => {
-    onDelete(image.name)
+    onDelete({ imageId: image.imageId, fileName: image.name })
   }
 
   return (
@@ -23,7 +22,7 @@ export default function DropImage({ image, onDelete, isPending, localUpdatedAt }
       <div className="flex items-center justify-between px-2 pt-2 z-50 gap-2 overflow-hidden">
         <i className="fas fa-image text-soft-blue-800 text-xs"></i>
         <div className="w-5/6 flex flex-col flex-grow min-w-0">
-          <span className="w-5/6 truncate text-xs font-semibold">{image.name}</span>
+          <span className="w-5/6 truncate text-xs font-semibold">{image.originalName}</span>
           <span className="w-5/6 truncate text-xs font-semibold text-soft-blue-800">
             {localUpdatedAt}
           </span>
@@ -39,7 +38,7 @@ export default function DropImage({ image, onDelete, isPending, localUpdatedAt }
 
       <div className=" w-full h-40 relative overflow-hidden">
         <Image
-          src={getPublicImageUrl(image.name)}
+          src={image.imageUrl}
           alt={image.name}
           fill
           priority

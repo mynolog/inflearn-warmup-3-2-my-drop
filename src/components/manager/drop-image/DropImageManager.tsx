@@ -1,6 +1,5 @@
 'use client'
-
-import type { StorageFile } from '@/types/supabaseTypes'
+import type { MydropRow } from '@/actions/storageActions'
 import DropImage from '@/components/ui/drop-image/DropImage'
 import { useMutation } from '@tanstack/react-query'
 import { deleteImage } from '@/actions/storageActions'
@@ -9,11 +8,11 @@ import { QUERY_KEY } from '@/constants/reactQueryConstants'
 import { getLocalTime } from '@/utils/format/format'
 
 interface DropImageManager {
-  image: StorageFile
+  image: MydropRow
 }
 
 export default function DropImageManager({ image }: DropImageManager) {
-  const LocalupdatedAt = getLocalTime(image.updated_at)
+  const localCreatedAt = getLocalTime(image.createdAt)
   const deleteImageMutation = useMutation({
     mutationFn: deleteImage,
     onSuccess: () => {
@@ -23,8 +22,14 @@ export default function DropImageManager({ image }: DropImageManager) {
     },
   })
 
-  const handleDeleteImage = (fileName: string) => {
-    deleteImageMutation.mutate(fileName)
+  const handleDeleteImage = ({
+    imageId,
+    fileName,
+  }: {
+    imageId: MydropRow['imageId']
+    fileName: string
+  }) => {
+    deleteImageMutation.mutate({ imageId, fileName })
   }
 
   return (
@@ -33,7 +38,7 @@ export default function DropImageManager({ image }: DropImageManager) {
         image={image}
         onDelete={handleDeleteImage}
         isPending={deleteImageMutation.isPending}
-        localUpdatedAt={LocalupdatedAt}
+        localUpdatedAt={localCreatedAt}
       />
     </li>
   )

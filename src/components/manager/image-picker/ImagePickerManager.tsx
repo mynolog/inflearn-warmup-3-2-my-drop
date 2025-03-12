@@ -58,7 +58,9 @@ export default function ImagePickerManager() {
           )
 
           formData.append(safeFileName, safeFile)
+          formData.append('originalFileName', file.name)
         })
+
         uploadImageMutation.mutate(formData)
       }
     },

@@ -1,14 +1,14 @@
 'use client'
 
+import type { MydropRow } from '@/actions/storageActions'
 import { UseQueryResult } from '@tanstack/react-query'
 import DropImageManager from '@/components/manager/drop-image/DropImageManager'
-import { StorageFile } from '@/types/supabaseTypes'
 import { useSearchStore } from '@/stores/useSearchStore'
 import Skeleton from '../skeleton/Skeleton'
 
 interface DropImageList {
-  filteredImageList: StorageFile[]
-  imagesQuery: UseQueryResult<StorageFile[] | null>
+  filteredImageList: MydropRow[]
+  imagesQuery: UseQueryResult<MydropRow[] | null>
 }
 
 export default function DropImageList({ filteredImageList, imagesQuery }: DropImageList) {
