@@ -32,9 +32,9 @@ pnpm run dev
 
 ### 🎥 데모 영상
 
-<!-- [![유튜브 썸네일](https://img.youtube.com/vi/dMRzbDt6sh0/0.jpg)](https://www.youtube.com/watch?v=dMRzbDt6sh0)
+#### 👉 [유튜브 링크](https://www.youtube.com/watch?v=unFhnRKPQY0)
 
-- 이미지 클릭 시 유튜브로 연결 -->
+[![유튜브 썸네일](https://img.youtube.com/vi/unFhnRKPQY0/0.jpg)](https://www.youtube.com/watch?v=unFhnRKPQY0)
 
 ### 🚀 배포 링크
 
