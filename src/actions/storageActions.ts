@@ -55,9 +55,9 @@ export async function uploadImage(formData: FormData) {
           const { data: files } = await supabase.storage.from(STORAGE_BUCKET_NAME).list()
           // 업로드된 파일 객체
           const uploadedFile = files?.find((file) => file.name === uploadedFileName)
-          //TODO: 에러 핸들링 필요
+
           if (!uploadedFile) {
-            return
+            throw new Error('파일 업로드 중 오류 발생')
           }
 
           const { data: dbData, error: dbError } = await supabase
