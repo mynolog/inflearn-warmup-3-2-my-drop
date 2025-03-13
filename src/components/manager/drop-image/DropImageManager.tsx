@@ -13,6 +13,7 @@ interface DropImageManager {
 
 export default function DropImageManager({ image }: DropImageManager) {
   const localCreatedAt = getLocalTime(image.createdAt)
+  const localUpdatedAt = image.updatedAt ? getLocalTime(image.updatedAt) : null
   const deleteImageMutation = useMutation({
     mutationFn: deleteImage,
     onSuccess: () => {
@@ -38,7 +39,8 @@ export default function DropImageManager({ image }: DropImageManager) {
         image={image}
         onDelete={handleDeleteImage}
         isPending={deleteImageMutation.isPending}
-        localUpdatedAt={localCreatedAt}
+        localCreatedAt={localCreatedAt}
+        localUpdatedAt={localUpdatedAt}
       />
     </li>
   )

@@ -10,10 +10,17 @@ interface DropImageProps {
   image: MydropRow
   onDelete: ({ imageId, fileName }: { imageId: MydropRow['imageId']; fileName: string }) => void
   isPending: boolean
-  localUpdatedAt: string
+  localCreatedAt: string
+  localUpdatedAt: string | null
 }
 
-export default function DropImage({ image, onDelete, isPending, localUpdatedAt }: DropImageProps) {
+export default function DropImage({
+  image,
+  onDelete,
+  isPending,
+  localCreatedAt,
+  localUpdatedAt,
+}: DropImageProps) {
   const handleDeleteClick = () => {
     onDelete({ imageId: image.imageId, fileName: image.name })
   }
@@ -21,12 +28,21 @@ export default function DropImage({ image, onDelete, isPending, localUpdatedAt }
   return (
     <div className="group w-full flex flex-col gap-2 border border-gray-100 bg-white hover:bg-gray-100 rounded-2xl shadow-md overflow-hidden transition-hover animate-fadeIn">
       <div className="flex items-center justify-between px-2 pt-2 gap-2 overflow-hidden">
-        <i className="fas fa-image text-soft-blue-800 text-xs"></i>
         <div className="w-5/6 flex flex-col flex-grow min-w-0">
-          <span className="w-5/6 truncate text-xs font-semibold">{image.originalName}</span>
-          <span className="w-5/6 truncate text-[0.65rem] font-semibold text-soft-blue-800">
-            {localUpdatedAt}
-          </span>
+          <div className="w-5/6 truncate">
+            <i className="fas fa-image text-soft-blue-800 text-md mr-2"></i>
+            <span className=" text-sm font-semibold">{image.originalName}</span>
+          </div>
+          <div className="w-5/6 truncate">
+            <span
+              className={`text-[0.7rem] font-semibold ${localUpdatedAt ? 'text-mint-800' : 'text-gray-500'}`}
+            >
+              {localUpdatedAt ? localUpdatedAt : localCreatedAt}
+            </span>
+            {localUpdatedAt && (
+              <span className="text-[0.7rem] font-semibold text-mint-800"> (수정)</span>
+            )}
+          </div>
         </div>
         <DownloadButton
           imageUrl={image.imageUrl}
