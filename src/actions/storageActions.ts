@@ -59,13 +59,40 @@ export async function uploadImage(formData: FormData) {
           if (!uploadedFile) {
             return
           }
-          const { error: dbError } = await supabase.from(DB_TABLE_NAME).insert({
-            name: file.name,
-            originalName: originalFileName,
-            imageId: uploadedFile.id,
-            imageUrl: publicUrl,
-            createdAt: new Date(file.lastModified).toISOString(),
-          })
+
+          const { data: dbData, error: dbError } = await supabase
+            .from(DB_TABLE_NAME)
+            .select('imageId')
+            .eq('imageId', uploadedFile.id)
+            .single()
+
+          if (dbData) {
+            const { error: updateError } = await supabase
+              .from(DB_TABLE_NAME)
+              .update({
+                name: file.name,
+                originalName: originalFileName,
+                imageUrl: publicUrl,
+                updatedAt: new Date().toISOString(),
+              })
+              .eq('imageId', uploadedFile.id)
+
+            if (updateError) {
+              handleError(updateError)
+            }
+          } else {
+            const { error: insertError } = await supabase.from(DB_TABLE_NAME).insert({
+              name: file.name,
+              originalName: originalFileName,
+              imageId: uploadedFile.id,
+              imageUrl: publicUrl,
+              createdAt: new Date(file.lastModified).toISOString(),
+            })
+
+            if (insertError) {
+              handleError(insertError)
+            }
+          }
 
           if (dbError) {
             handleError(dbError)
