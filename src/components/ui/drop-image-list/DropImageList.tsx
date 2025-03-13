@@ -19,7 +19,7 @@ export default function DropImageList({ filteredImageList, imagesQuery }: DropIm
       {/* 초기 렌더링 시 스켈레톤 UI 표시 */}
       {imagesQuery.isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-52">
-          {[...Array(4)].map((_, index) => (
+          {[...Array(9)].map((_, index) => (
             <div className="flex items-center justify-center h-52" key={index}>
               <Skeleton width="100%" height="100%" className="rounded-xl" />
             </div>
