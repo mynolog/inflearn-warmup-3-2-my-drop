@@ -31,7 +31,7 @@ export default function RootLayout({
         />
       </head>
       <ReactQueryClientProvider>
-        <body className={`${notoSansKR.className} antialiased w-full h-screen`}>{children}</body>
+        <body className={`${notoSansKR.className} antialiased w-full`}>{children}</body>
       </ReactQueryClientProvider>
     </html>
   )

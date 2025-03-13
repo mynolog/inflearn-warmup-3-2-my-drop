@@ -3,7 +3,7 @@ import DropImageListManager from '@/components/manager/drop-image-list/DropImage
 
 export default function Main() {
   return (
-    <main className="flex flex-col mx-auto py-3 gap-3">
+    <main className="flex flex-col mx-auto py-6 gap-10">
       <ImagePickerManager />
       <DropImageListManager />
     </main>

@@ -23,7 +23,7 @@ export default function ImagePicker({
   return (
     <div
       {...getRootProps()}
-      className="w-full h-40 border-4 border-dashed text-sm rounded-lg bg-white text-gray-500 border-mint-600 py-12 flex flex-col justify-center items-center gap-5 cursor-pointer transition-hover"
+      className="w-full h-40 border-4 border-dashed text-sm rounded-lg bg-gray-100 text-gray-500 py-12 flex flex-col justify-center items-center gap-5 cursor-pointer shadow-sm"
     >
       <input {...getInputProps()} />
       {isPending ? (
