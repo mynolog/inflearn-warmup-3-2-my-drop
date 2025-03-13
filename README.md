@@ -60,7 +60,11 @@ pnpm run dev
   </a>
 </p>
 
-## 📂 폴더 구조
+### 📊 ERD 다이어그램
+
+![ERD 다이어그램](https://gxzwdcgjtorzehmxxqar.supabase.co/storage/v1/object/public/inflearn//erd_diagram.png)
+
+### 📂 폴더 구조
 
 ```
 /src
