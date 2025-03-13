@@ -8,14 +8,14 @@ interface ImagePickerProps {
   dropzoneState: DropzoneState
   isPending: boolean
   isError: FileError
-  hasInvalideFileError: string
+  hasInvalidFileError: string
 }
 
 export default function ImagePicker({
   dropzoneState,
   isPending,
   isError,
-  hasInvalideFileError,
+  hasInvalidFileError,
 }: ImagePickerProps) {
   const { getInputProps, getRootProps, isDragActive } = dropzoneState
   const { message, hasError } = isError
@@ -44,9 +44,9 @@ export default function ImagePicker({
               <p className="font-extrabold">
                 파일을 올리려면 여기에 끌어다 놓거나 클릭해서 선택하세요!
               </p>
-              {hasError && <p className="font-semibold text-xs text-red-400">{message}</p>}
-              {hasInvalideFileError && (
-                <p className="font-semibold text-xs text-red-400">{hasInvalideFileError}</p>
+              {hasError && <p className="font-semibold text-xs text-soft-violet-400">{message}</p>}
+              {hasInvalidFileError && (
+                <p className="font-semibold text-xs text-red-400">{hasInvalidFileError}</p>
               )}
             </>
           )}

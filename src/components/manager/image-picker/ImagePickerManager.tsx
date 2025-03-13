@@ -11,6 +11,7 @@ import { MAX_FILE_SIZE } from '@/constants/supabaseConstants'
 import useFileError from '@/hooks/useFileError'
 import { generateSafeFileName } from '@/utils/generate/generate'
 import { ExtendedFile } from '@/models/ExtendedFile'
+import compressImage from '@/utils/image/image'
 
 export default function ImagePickerManager() {
   const [invalidFileError, setInvalidFileError] = useState('')
@@ -33,7 +34,6 @@ export default function ImagePickerManager() {
       resetFileError()
 
       const oversizedFiles = acceptedFiles.filter((file) => file.size > MAX_FILE_SIZE)
-      const validFiles = acceptedFiles.filter((file) => file.size <= MAX_FILE_SIZE)
 
       if (oversizedFiles.length > 0) {
         const oversizedFileNames = oversizedFiles.map((file) => file.name)
@@ -41,30 +41,38 @@ export default function ImagePickerManager() {
         setFileErrorState(oversizedFileNames)
       }
 
-      if (validFiles.length > 0) {
+      if (acceptedFiles.length > 0) {
         const formData = new FormData()
-        validFiles.forEach((file) => {
-          // 파일명에 한글 포함되어 있을 경우 파일명 변경 후 업로드
-          const safeFileName = generateSafeFileName(file.name)
-          const safeFile = new ExtendedFile(
-            [file],
-            safeFileName,
-            {
-              type: file.type,
-              lastModified: file.lastModified,
-            },
-            `./${safeFileName}`,
-            `./${safeFileName}`,
-          )
 
+        const compressedFiles = await Promise.all(
+          acceptedFiles.map(async (file) => {
+            const compressedFile = await compressImage(file)
+
+            const safeFileName = generateSafeFileName(compressedFile.name)
+            const safeFile = new ExtendedFile(
+              [compressedFile],
+              safeFileName,
+              {
+                type: compressedFile.type,
+                lastModified: compressedFile.lastModified,
+              },
+              `./${safeFileName}`,
+              `./${safeFileName}`,
+            )
+
+            return { safeFileName, safeFile, originalFileName: compressedFile.name }
+          }),
+        )
+
+        compressedFiles.forEach(({ safeFileName, safeFile, originalFileName }) => {
           formData.append(safeFileName, safeFile)
-          formData.append('originalFileName', file.name)
+          formData.append('originalFileName', originalFileName)
         })
 
         uploadImageMutation.mutate(formData)
       }
     },
-    [uploadImageMutation, setFileErrorState, resetFileError],
+    [uploadImageMutation, resetFileError, setFileErrorState],
   )
 
   const dropzoneState = useDropzone({
@@ -85,7 +93,7 @@ export default function ImagePickerManager() {
       dropzoneState={dropzoneState}
       isPending={uploadImageMutation.isPending}
       isError={error}
-      hasInvalideFileError={invalidFileError}
+      hasInvalidFileError={invalidFileError}
     />
   )
 }

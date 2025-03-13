@@ -17,7 +17,7 @@ export default function useFileError() {
     setFileError({
       hasError: fileNames.length > 0,
       fileNames,
-      message: `다음 파일은 1MB를 초과하여 업로드할 수 없습니다: ${fileNames.join(', ')}`,
+      message: `다음 파일은 1MB를 초과하여 압축 후 업로드 되었습니다: ${fileNames.join(', ')}`,
     })
   }
 
