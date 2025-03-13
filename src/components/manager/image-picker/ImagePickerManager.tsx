@@ -85,6 +85,7 @@ export default function ImagePickerManager() {
       'image/gif': ['.gif'],
       'image/heif': ['.heif'],
       'image/heic': ['.heic'],
+      'image/webp': ['.webp'],
     },
   })
 
