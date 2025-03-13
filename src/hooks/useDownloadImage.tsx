@@ -7,7 +7,7 @@ export function useDownloadImage() {
       const blob = await response.blob()
       const blobUrl = window.URL.createObjectURL(blob)
 
-      const link = document.createElement('a') // ✅ 동적으로 <a> 태그 생성
+      const link = document.createElement('a')
       link.href = blobUrl
       link.download = fileName
       document.body.appendChild(link)
@@ -15,7 +15,7 @@ export function useDownloadImage() {
       document.body.removeChild(link)
       window.URL.revokeObjectURL(blobUrl)
     } catch (error) {
-      console.error('❌ 이미지 다운로드 실패:', error)
+      console.error('이미지 다운로드 실패:', error)
     }
   }, [])
 }
