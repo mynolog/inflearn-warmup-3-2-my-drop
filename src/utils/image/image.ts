@@ -22,7 +22,7 @@ export default async function compressImage(file: File) {
     return compressedFile
   } catch (error) {
     console.error('이미지 압축 실패:', error)
-    // 압축 에러 발생 시 원본 파일 그대로 반환
+    // 압축 실패 시 원본 파일 반환
     return file
   }
 }

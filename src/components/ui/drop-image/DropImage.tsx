@@ -4,6 +4,7 @@ import type { MydropRow } from '@/actions/storageActions'
 import Image from 'next/image'
 import BaseButton from '../button/BaseButton'
 import Spinner from '../spinner/Spinner'
+import DownloadButton from '../button/DownloadButton'
 
 interface DropImageProps {
   image: MydropRow
@@ -23,10 +24,15 @@ export default function DropImage({ image, onDelete, isPending, localUpdatedAt }
         <i className="fas fa-image text-soft-blue-800 text-xs"></i>
         <div className="w-5/6 flex flex-col flex-grow min-w-0">
           <span className="w-5/6 truncate text-xs font-semibold">{image.originalName}</span>
-          <span className="w-5/6 truncate text-xs font-semibold text-soft-blue-800">
+          <span className="w-5/6 truncate text-[0.65rem] font-semibold text-soft-blue-800">
             {localUpdatedAt}
           </span>
         </div>
+        <DownloadButton
+          imageUrl={image.imageUrl}
+          fileName={image.originalName}
+          className="w-7 h-6 rounded-lg flex-shrink-0"
+        />
         <BaseButton
           bgColor="bg-red-500"
           className="w-7 h-6 rounded-lg flex-shrink-0"
