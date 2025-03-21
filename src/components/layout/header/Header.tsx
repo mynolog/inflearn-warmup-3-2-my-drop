@@ -1,6 +1,6 @@
 import Logo from '@/components/ui/logo/Logo'
 import SearchInputManager from '@/components/manager/input/SearchInputManager'
-import Title from '@/components/ui/title/Title'
+import Title from '../../../components/ui/title/Title'
 
 export default function Header() {
   return (
